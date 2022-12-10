@@ -50,5 +50,11 @@ public class ProductGroupController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/find")
+    public ResponseEntity<List<ProductGroupReadDto>> findAllByName(@RequestParam String name) {
+        List<ProductGroupReadDto> productGroupReadDtoList = service.findAllByName(name);
+        return ResponseEntity.ok(productGroupReadDtoList);
+    }
+
 
 }

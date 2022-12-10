@@ -9,4 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ProductGroupRepository extends JpaRepository<ProductGroup, Long> {
+    List<ProductGroup> findAllByNameContainingIgnoreCase(String name);
 }

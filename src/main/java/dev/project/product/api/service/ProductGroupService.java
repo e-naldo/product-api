@@ -46,4 +46,9 @@ public class ProductGroupService {
                 .orElseThrow(RuntimeException::new);
         return mapper.toReadDto(productGroup);
     }
+
+    public List<ProductGroupReadDto> findAllByName(String name){
+        List<ProductGroup> productGroupList = repository.findAllByNameContainingIgnoreCase(name);
+        return mapper.toListDto(productGroupList);
+    }
 }

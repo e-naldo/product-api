@@ -1,9 +1,9 @@
 package dev.project.product.api.mapper;
 
 import dev.project.product.api.domain.ProductGroup;
-import dev.project.product.api.dto.ProductGroupCreateDto;
-import dev.project.product.api.dto.ProductGroupReadDto;
-import dev.project.product.api.dto.ProductGroupUpdateDto;
+import dev.project.product.api.dto.productgroup.ProductGroupCreateDto;
+import dev.project.product.api.dto.productgroup.ProductGroupReadDto;
+import dev.project.product.api.dto.productgroup.ProductGroupUpdateDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

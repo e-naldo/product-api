@@ -1,8 +1,8 @@
 package dev.project.product.api.controller;
 
-import dev.project.product.api.dto.ProductGroupCreateDto;
-import dev.project.product.api.dto.ProductGroupReadDto;
-import dev.project.product.api.dto.ProductGroupUpdateDto;
+import dev.project.product.api.dto.productgroup.ProductGroupCreateDto;
+import dev.project.product.api.dto.productgroup.ProductGroupReadDto;
+import dev.project.product.api.dto.productgroup.ProductGroupUpdateDto;
 import dev.project.product.api.service.ProductGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

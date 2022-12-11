@@ -1,4 +1,4 @@
-package dev.project.product.api.dto;
+package dev.project.product.api.dto.productgroup;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

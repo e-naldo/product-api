@@ -1,10 +1,10 @@
 package dev.project.product.api.controller;
 
-import dev.project.product.api.domain.Product;
 import dev.project.product.api.dto.product.ProductCreateDto;
 import dev.project.product.api.dto.product.ProductDetailDto;
 import dev.project.product.api.dto.product.ProductQueryDto;
 import dev.project.product.api.dto.product.ProductUpdateDto;
+import dev.project.product.api.exception.ClientErrorException;
 import dev.project.product.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class ProductController {
     public ResponseEntity<ProductDetailDto> update(@PathVariable Long id,
                                                    @RequestBody ProductUpdateDto dto) {
         if (!id.equals(dto.id())) {
-            return ResponseEntity.badRequest().build();
+            throw new ClientErrorException("id's não coincidem.");
         }
         ProductDetailDto productReadDto = service.update(id, dto);
         return ResponseEntity.ok(productReadDto);

@@ -4,6 +4,7 @@ import dev.project.product.api.domain.ProductGroup;
 import dev.project.product.api.dto.productgroup.ProductGroupCreateDto;
 import dev.project.product.api.dto.productgroup.ProductGroupReadDto;
 import dev.project.product.api.dto.productgroup.ProductGroupUpdateDto;
+import dev.project.product.api.exception.ResourceNotFoundException;
 import dev.project.product.api.mapper.ProductGroupMapper;
 import dev.project.product.api.repository.ProductGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class ProductGroupService {
 
     public ProductGroupReadDto update(Long id, ProductGroupUpdateDto dto) {
         ProductGroup productGroupFound = repository.findById(id)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ResourceNotFoundException::new);
 
         ProductGroup productGroup = mapper.toUpdateEntity(productGroupFound, dto);
         repository.save(productGroup);
@@ -43,7 +44,7 @@ public class ProductGroupService {
 
     public ProductGroupReadDto findById(Long id) {
         ProductGroup productGroup = repository.findById(id)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ResourceNotFoundException::new);
         return mapper.toReadDto(productGroup);
     }
 

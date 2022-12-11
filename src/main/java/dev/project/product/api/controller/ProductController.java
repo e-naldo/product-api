@@ -1,11 +1,12 @@
 package dev.project.product.api.controller;
 
-import dev.project.product.api.domain.Product;
 import dev.project.product.api.dto.product.ProductCreateDto;
 import dev.project.product.api.dto.product.ProductDetailDto;
 import dev.project.product.api.dto.product.ProductQueryDto;
 import dev.project.product.api.dto.product.ProductUpdateDto;
+import dev.project.product.api.exception.ClientErrorException;
 import dev.project.product.api.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class ProductController {
 
 
     @PostMapping
-    public ResponseEntity<ProductDetailDto> create(@RequestBody ProductCreateDto dto,
+    public ResponseEntity<ProductDetailDto> create(@RequestBody @Valid ProductCreateDto dto,
                                                    UriComponentsBuilder uriComponentsBuilder) {
         ProductDetailDto productReadDto = service.create(dto);
         URI uri = uriComponentsBuilder.path("/api/v1/products/{id}").buildAndExpand((productReadDto.id())).toUri();
@@ -32,9 +33,9 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductDetailDto> update(@PathVariable Long id,
-                                                   @RequestBody ProductUpdateDto dto) {
+                                                   @RequestBody @Valid ProductUpdateDto dto) {
         if (!id.equals(dto.id())) {
-            return ResponseEntity.badRequest().build();
+            throw new ClientErrorException("id's não coincidem.");
         }
         ProductDetailDto productReadDto = service.update(id, dto);
         return ResponseEntity.ok(productReadDto);

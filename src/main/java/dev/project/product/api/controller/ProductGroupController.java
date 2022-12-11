@@ -3,7 +3,9 @@ package dev.project.product.api.controller;
 import dev.project.product.api.dto.productgroup.ProductGroupCreateDto;
 import dev.project.product.api.dto.productgroup.ProductGroupReadDto;
 import dev.project.product.api.dto.productgroup.ProductGroupUpdateDto;
+import dev.project.product.api.exception.ClientErrorException;
 import dev.project.product.api.service.ProductGroupService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,7 @@ public class ProductGroupController {
 
 
     @PostMapping
-    public ResponseEntity<ProductGroupReadDto> create(@RequestBody ProductGroupCreateDto dto,
+    public ResponseEntity<ProductGroupReadDto> create(@RequestBody @Valid ProductGroupCreateDto dto,
                                                       UriComponentsBuilder uriComponentsBuilder) {
         ProductGroupReadDto productGroupReadDto = service.create(dto);
         URI uri = uriComponentsBuilder.path("/api/v1/productGroups/{id}").buildAndExpand((productGroupReadDto.id())).toUri();
@@ -30,9 +32,9 @@ public class ProductGroupController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductGroupReadDto> update(@PathVariable Long id,
-                                                      @RequestBody ProductGroupUpdateDto dto) {
+                                                      @RequestBody @Valid ProductGroupUpdateDto dto) {
         if (!id.equals(dto.id())) {
-            return ResponseEntity.badRequest().build();
+            throw new ClientErrorException("id's não coincidem.");
         }
         ProductGroupReadDto productGroupReadDto = service.update(id, dto);
         return ResponseEntity.ok(productGroupReadDto);

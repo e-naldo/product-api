@@ -2,6 +2,7 @@ package dev.project.product.api.service;
 
 import dev.project.product.api.domain.Product;
 import dev.project.product.api.dto.product.*;
+import dev.project.product.api.exception.ResourceNotFoundException;
 import dev.project.product.api.mapper.ProductMapper;
 import dev.project.product.api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ProductService {
 
     public ProductDetailDto update(Long id, ProductUpdateDto dto) {
         Product productFound = repository.findById(id)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ResourceNotFoundException::new);
 
         Product product = mapper.toUpdateEntity(dto, productFound);
         repository.save(product);
@@ -41,7 +42,7 @@ public class ProductService {
 
     public ProductDetailDto findById(Long id) {
         Product product = repository.findById(id)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ResourceNotFoundException::new);
         return mapper.toDetailDto(product);
     }
 

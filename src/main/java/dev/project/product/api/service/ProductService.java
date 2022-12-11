@@ -1,10 +1,7 @@
 package dev.project.product.api.service;
 
 import dev.project.product.api.domain.Product;
-import dev.project.product.api.dto.product.ProductCreateDto;
-import dev.project.product.api.dto.product.ProductDetailDto;
-import dev.project.product.api.dto.product.ProductReadDto;
-import dev.project.product.api.dto.product.ProductUpdateDto;
+import dev.project.product.api.dto.product.*;
 import dev.project.product.api.mapper.ProductMapper;
 import dev.project.product.api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +48,15 @@ public class ProductService {
     public List<ProductDetailDto> findAllByName(String name){
         List<Product> productList = repository.findAllByNameContainingIgnoreCase(name);
         return mapper.toListDetailDto(productList);
+    }
+
+    public List<ProductDetailDto> findByFilter(ProductQueryDto dto) {
+        List<Product> product = repository.findAllByFilter(
+                dto.id(),
+                dto.productGroupId(),
+                dto.reference(),
+                dto.name()
+        );
+        return mapper.toListDetailDto(product);
     }
 }

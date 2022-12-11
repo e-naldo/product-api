@@ -1,7 +1,9 @@
 package dev.project.product.api.controller;
 
+import dev.project.product.api.domain.Product;
 import dev.project.product.api.dto.product.ProductCreateDto;
 import dev.project.product.api.dto.product.ProductDetailDto;
+import dev.project.product.api.dto.product.ProductQueryDto;
 import dev.project.product.api.dto.product.ProductUpdateDto;
 import dev.project.product.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,4 +57,11 @@ public class ProductController {
         List<ProductDetailDto> productReadDtoList = service.findAllByName(name);
         return ResponseEntity.ok(productReadDtoList);
     }
+
+    @PostMapping("/queryFilter")
+    public ResponseEntity<List<ProductDetailDto>> findByFilter(@RequestBody ProductQueryDto dto){
+        List<ProductDetailDto> productDtoList = service.findByFilter(dto);
+        return ResponseEntity.ok(productDtoList);
+    }
+
 }

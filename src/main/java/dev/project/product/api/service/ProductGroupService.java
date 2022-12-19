@@ -49,7 +49,7 @@ public class ProductGroupService {
     }
 
     public List<ProductGroupReadDto> findAllByName(String name){
-        List<ProductGroup> productGroupList = repository.findAllByNameContainingIgnoreCase(name);
+        List<ProductGroup> productGroupList = repository.findAllByNameContainingIgnoreCaseOrderByName(name);
         return mapper.toListDto(productGroupList);
     }
 }

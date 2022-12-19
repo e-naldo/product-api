@@ -6,10 +6,12 @@ import java.math.BigDecimal;
 
 public record ProductReadDto(
         Long id,
-        ProductGroupReadDto productGroup,
+        String productGroup,
         String reference,
         String name,
         String unity,
         BigDecimal salePrice
+
+        // TODO: 16/12/2022 Devolver apenas o name do productGroup
 ) {
 }

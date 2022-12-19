@@ -7,10 +7,8 @@ import dev.project.product.api.dto.product.ProductReadDto;
 import dev.project.product.api.dto.product.ProductUpdateDto;
 import dev.project.product.api.repository.ProductGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class ProductMapper {
@@ -31,7 +29,7 @@ public class ProductMapper {
     public ProductReadDto toReadDto(Product product) {
         ProductReadDto dto = new ProductReadDto(
                 product.getId(),
-                new ProductGroupMapper().toReadDto(product.getProductGroup()),
+                product.getProductGroup().getName(),
                 product.getReference(),
                 product.getName(),
                 product.getUnity(),
@@ -52,7 +50,7 @@ public class ProductMapper {
     public ProductDetailDto toDetailDto(Product product) {
         ProductDetailDto dto = new ProductDetailDto(
                 product.getId(),
-                new ProductGroupMapper().toReadDto(product.getProductGroup()),
+                product.getProductGroup().getName(),
                 product.getReference(),
                 product.getName(),
                 product.getUnity(),
@@ -62,7 +60,11 @@ public class ProductMapper {
         return dto;
     }
 
-    public List<ProductDetailDto> toListDetailDto(List<Product> productGroupList) {
-        return productGroupList.stream().map(this::toDetailDto).collect(Collectors.toList());
+    public Page<ProductDetailDto> toListDetailDto(Page<Product> productList) {
+        return productList.map(this::toDetailDto);
+    }
+
+    public Page<ProductDetailDto> toPageDetailDto(Page<Product> productList) {
+        return productList.map(this::toDetailDto);
     }
 }

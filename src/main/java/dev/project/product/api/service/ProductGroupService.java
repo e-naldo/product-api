@@ -8,6 +8,7 @@ import dev.project.product.api.exception.ResourceNotFoundException;
 import dev.project.product.api.mapper.ProductGroupMapper;
 import dev.project.product.api.repository.ProductGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class ProductGroupService {
     }
 
     public List<ProductGroupReadDto> findAll() {
-        List<ProductGroup> productGroupList = repository.findAll();
+        List<ProductGroup> productGroupList = repository.findAll(Sort.by("name").ascending());
         return mapper.toListDto(productGroupList);
     }
 

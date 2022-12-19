@@ -6,6 +6,8 @@ import dev.project.product.api.exception.ResourceNotFoundException;
 import dev.project.product.api.mapper.ProductMapper;
 import dev.project.product.api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,9 +37,9 @@ public class ProductService {
         return mapper.toDetailDto(product);
     }
 
-    public List<ProductDetailDto> findAll() {
-        List<Product> productList = repository.findAll();
-        return mapper.toListDetailDto(productList);
+    public Page<ProductDetailDto> findAll(Pageable pageable) {
+        Page<Product> productList = repository.findAll(pageable);
+        return mapper.toPageDetailDto(productList);
     }
 
     public ProductDetailDto findById(Long id) {
@@ -46,17 +48,18 @@ public class ProductService {
         return mapper.toDetailDto(product);
     }
 
-    public List<ProductDetailDto> findAllByName(String name){
-        List<Product> productList = repository.findAllByNameContainingIgnoreCase(name);
+    public Page<ProductDetailDto> findAllByName(String name, Pageable pageable){
+        Page<Product> productList = repository.findAllByNameContainingIgnoreCase(name, pageable);
         return mapper.toListDetailDto(productList);
     }
 
-    public List<ProductDetailDto> findByFilter(ProductQueryDto dto) {
-        List<Product> product = repository.findAllByFilter(
+    public Page<ProductDetailDto> findByFilter(ProductQueryDto dto, Pageable pageable) {
+        Page<Product> product = repository.findAllByFilter(
                 dto.id(),
                 dto.productGroupId(),
                 dto.reference(),
-                dto.name()
+                dto.name(),
+                pageable
         );
         return mapper.toListDetailDto(product);
     }

@@ -8,6 +8,9 @@ import dev.project.product.api.exception.ClientErrorException;
 import dev.project.product.api.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -42,8 +45,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDetailDto>> listAll() {
-        List<ProductDetailDto> productReadDtoList = service.findAll();
+    public ResponseEntity<Page<ProductDetailDto>> listAll(@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
+        Page<ProductDetailDto> productReadDtoList = service.findAll(pageable);
         return ResponseEntity.ok(productReadDtoList);
     }
 
@@ -54,14 +57,16 @@ public class ProductController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<ProductDetailDto>> findAllByName(@RequestParam String name) {
-        List<ProductDetailDto> productReadDtoList = service.findAllByName(name);
+    public ResponseEntity<Page<ProductDetailDto>> findAllByName(@RequestParam String name,
+                                                                Pageable pageable) {
+        Page<ProductDetailDto> productReadDtoList = service.findAllByName(name, pageable);
         return ResponseEntity.ok(productReadDtoList);
     }
 
     @PostMapping("/queryFilter")
-    public ResponseEntity<List<ProductDetailDto>> findByFilter(@RequestBody ProductQueryDto dto){
-        List<ProductDetailDto> productDtoList = service.findByFilter(dto);
+    public ResponseEntity<Page<ProductDetailDto>> findByFilter(@RequestBody ProductQueryDto dto,
+                                                               Pageable pageable){
+        Page<ProductDetailDto> productDtoList = service.findByFilter(dto, pageable);
         return ResponseEntity.ok(productDtoList);
     }
 

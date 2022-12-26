@@ -29,6 +29,7 @@ public class Product extends BaseEntity {
 
     @Column(name = "sale_price")
     private BigDecimal salePrice ;
+    private Boolean active;
 
     public Product(ProductGroup productGroup, String reference, String name, String unity, BigDecimal costPrice) {
         this.productGroup = productGroup;
@@ -36,10 +37,15 @@ public class Product extends BaseEntity {
         this.name = name;
         this.unity = unity;
         this.costPrice = costPrice;
+        this.active = true;
         calculatePrice();
     }
 
     public void calculatePrice() {
         salePrice = costPrice.multiply(new BigDecimal("2.05"));
+    }
+
+    public void inactivate() {
+        this.active = false;
     }
 }

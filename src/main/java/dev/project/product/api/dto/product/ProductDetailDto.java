@@ -11,8 +11,7 @@ public record ProductDetailDto(
         String name,
         String unity,
         BigDecimal costPrice,
-        BigDecimal salePrice
-
-        // TODO: 16/12/2022 Devolver apenas o name do productGroup 
+        BigDecimal salePrice,
+        Boolean active
 ) {
 }

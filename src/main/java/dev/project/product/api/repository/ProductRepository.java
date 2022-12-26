@@ -24,7 +24,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "(:id is null or p.id = :id) and" +
             "(:name is null or lower(p.name) like lower(concat('%', :name, '%'))) and" +
             "(:productGroupId is null or p.productGroup.id = :productGroupId) and" +
-            "(:reference is null or p.reference = :reference)")
+            "(:reference is null or p.reference = :reference) and" +
+            "(:active is null or p.active = :active)")
     Page<Product> findAllByFilter(Long id, Long productGroupId,
-                                  String reference, String name, Pageable pageable);
+                                  String reference, String name, Boolean active, Pageable pageable);
+
+    @EntityGraph(attributePaths = "productGroup")
+    Page<Product> findAllByActiveTrue(Pageable pageable);
 }

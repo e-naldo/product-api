@@ -55,7 +55,8 @@ public class ProductMapper {
                 product.getName(),
                 product.getUnity(),
                 product.getCostPrice(),
-                product.getSalePrice()
+                product.getSalePrice(),
+                product.getActive()
         );
         return dto;
     }

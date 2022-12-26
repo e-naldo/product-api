@@ -1,5 +1,6 @@
 package dev.project.product.api.service;
 
+import dev.project.product.api.domain.Product;
 import dev.project.product.api.domain.ProductGroup;
 import dev.project.product.api.dto.productgroup.ProductGroupCreateDto;
 import dev.project.product.api.dto.productgroup.ProductGroupReadDto;
@@ -10,8 +11,10 @@ import dev.project.product.api.repository.ProductGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductGroupService {
@@ -53,4 +56,11 @@ public class ProductGroupService {
         List<ProductGroup> productGroupList = repository.findAllByNameContainingIgnoreCaseOrderByName(name);
         return mapper.toListDto(productGroupList);
     }
+
+    public void deleteById(Long id){
+        ProductGroup productGroup = repository.getReferenceById(id);
+        productGroup.inactivate();
+        repository.save(productGroup);
+    }
+
 }

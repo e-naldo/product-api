@@ -58,5 +58,11 @@ public class ProductGroupController {
         return ResponseEntity.ok(productGroupReadDtoList);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteLogicalById(@PathVariable Long id){
+        service.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 
 }

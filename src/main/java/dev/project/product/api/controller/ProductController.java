@@ -70,4 +70,10 @@ public class ProductController {
         return ResponseEntity.ok(productDtoList);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteLogicalById(@PathVariable Long id){
+        service.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

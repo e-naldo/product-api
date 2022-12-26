@@ -4,5 +4,6 @@ public record ProductQueryDto(
     Long id,
     Long productGroupId,
     String reference,
-    String name
+    String name,
+    Boolean active
 ){}

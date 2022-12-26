@@ -10,8 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ProductService {
 
@@ -38,7 +36,7 @@ public class ProductService {
     }
 
     public Page<ProductDetailDto> findAll(Pageable pageable) {
-        Page<Product> productList = repository.findAll(pageable);
+        Page<Product> productList = repository.findAllByActiveTrue(pageable);
         return mapper.toPageDetailDto(productList);
     }
 
@@ -59,8 +57,15 @@ public class ProductService {
                 dto.productGroupId(),
                 dto.reference(),
                 dto.name(),
+                dto.active(),
                 pageable
         );
         return mapper.toListDetailDto(product);
+    }
+
+    public void deleteById(Long id){
+        Product product = repository.getReferenceById(id);
+        product.inactivate();
+        repository.save(product);
     }
 }
